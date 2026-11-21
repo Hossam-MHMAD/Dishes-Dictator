@@ -1,0 +1,126 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+
+<div class="wrap">
+  <header class="nav">
+    <div class="bar glass" style="position:relative">
+      <span class="logo grad">D.D</span>
+      <button class="menu" id="menu" aria-expanded="false" aria-controls="links">Menu</button>
+      <nav class="links" id="links" aria-label="Main">
+        <a href="#how">How it works</a>
+        <a href="#board">Leaderboard</a>
+        <a href="#faq">FAQ</a>
+        <a class="btn" href="#login">Log in</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <div class="hero">
+      <div>
+        <h1>Turn a Cleaner <span class="grad">into a Dictator</span></h1>
+        <p class="lead">Wash the dishes, win points, and rule the kitchen for a week. Then the crown changes hands.
+        </p>
+        <div class="actions">
+          <a class="btn fill" id="register">Register</a>
+          <a class="btn" href="#login">Log in</a>
+        </div>
+      </div>
+
+      <aside class="throne glass" aria-label="Current dictator">
+        <span class="tag">Reigning this week</span>
+        <div class="medal" aria-hidden="true">👑</div>
+        <h2 class="grad">Hossam</h2>
+        <p class="pts">42 points so far</p>
+        <div class="count" role="timer" aria-label="Time until the crown changes hands">
+          <div><b id="d">0</b><span>days</span></div>
+          <div><b id="h">0</b><span>hours</span></div>
+          <div><b id="m">0</b><span>min</span></div>
+        </div>
+        <p class="cap">until the crown changes hands</p>
+      </aside>
+    </div>
+
+    <section id="how">
+      <div class="head reveal">
+        <h2>How the regime works</h2>
+        <p>Two washes a week. Every photo gets judged by the family.</p>
+      </div>
+      <div class="bento">
+        <article class="tile glass step reveal"><span class="n grad">1</span>
+          <div>
+            <h3>Wash the dishes</h3>
+            <p>Every cleaner takes two turns a week.</p>
+          </div>
+        </article>
+        <article class="tile glass step reveal"><span class="n grad">2</span>
+          <div>
+            <h3>Upload a photo</h3>
+            <p>Show the clean sink and the shiny plates.</p>
+          </div>
+        </article>
+        <article class="tile glass step reveal"><span class="n grad">3</span>
+          <div>
+            <h3>Get judged</h3>
+            <p>Evaluators score your work and you earn points.</p>
+          </div>
+        </article>
+
+        <article class="tile glass wide reveal" id="board">
+          <h3>This week’s leaderboard</h3>
+          <ol class="rank">
+            <li><span>Hossam</span><b>42 pts</b></li>
+            <li><span>Brother 1</span><b>37 pts</b></li>
+            <li><span>Brother 2</span><b>31 pts</b></li>
+          </ol>
+        </article>
+        <article class="tile glass wide reveal">
+          <h3>Hall of fame</h3>
+          <div class="fame">
+            <div class="row"><span>Last week</span><b>Brother 1</b></div>
+            <div class="row"><span>2 weeks ago</span><b>Brother 2</b></div>
+            <div class="row"><span>3 weeks ago</span><b>Hossam</b></div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section id="faq">
+      <div class="head reveal">
+        <h2>Questions</h2>
+      </div>
+      <div class="faq reveal">
+        <details>
+          <summary>Who can wash the dishes?</summary>
+          <p>Only cleaners compete. Everyone else in the family is an evaluator.</p>
+        </details>
+        <details>
+          <summary>When do points reset?</summary>
+          <p>Every week. The cleaner with the most points becomes the new dictator.</p>
+        </details>
+        <details>
+          <summary>How does scoring work?</summary>
+          <p>After each wash, evaluators look at your photo and give it a score.</p>
+        </details>
+        <details>
+          <summary>What can the dictator do?</summary>
+          <p>The dictator can choose any cleaner to wash the dishes once during the following week. Since there are 7 days in a week and 3 cleaners who wash twice each, the 7th day is free, and the dictator decides who washes on that day. The cleaner must stay in the kitchen until the dictator is satisfied with the work. This wash is recorded on the website as the dictator's wash and judged like any other, so the cleaner has every reason to make sure the dictator is happy.</p>
+        </details>
+      </div>
+    </section>
+
+    <section id="register">
+      <div class="cta glass reveal">
+        <h2>Ready to wash for the <span class="grad">crown</span>?</h2>
+        <p>Cleaners earn points. Evaluators decide who deserves them.</p>
+        <a class="btn fill" href="#"">Log in or register</a>
+      </div>
+    </section>
+  </main>
+
+  <footer>Dishes Dictator is a family project. Names and points shown are placeholders.</footer>
+</div>
+
+{% endblock %}
