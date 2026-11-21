@@ -1,3 +1,5 @@
+
+// template design 
 document.documentElement.classList.add("js");
 var links = document.getElementById("links"), menu = document.getElementById("menu");
 menu.addEventListener("click", function () {
@@ -27,3 +29,8 @@ function tick() {
   document.getElementById("m").textContent = Math.floor(s % 3600 / 60);
 }
 tick(); setInterval(tick, 30000);
+
+// APIs 
+const APIs = {
+  leader_board: "/api/leader-board"
+}

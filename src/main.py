@@ -1,4 +1,4 @@
-from flask import Flask, request, render_template, g
+from flask import Flask, request, render_template, g, jsonify
 import sqlite3
 
 DB = "data.db"
@@ -69,9 +69,27 @@ def init_db():
   conn.commit()
   conn.close()
 
+# Landing Page
 @app.route("/")
 def landing():
   return render_template("landing.html")
+
+@app.route("/api/leader-board", methods=["GET"])
+def get_leader_board():
+  db = get_db()
+
+  curs = db.cursor()
+
+  rows = curs.execute("""
+  SELECT c.points, u.name
+  FROM Cleaners AS c
+  LEFT JOIN Users AS u
+  ON c.user_id = u.id
+  ORDER BY points DESC
+  """).fetchall()
+
+  data = [dict(row) for row in rows]
+  return jsonify(data)
 
 
 if __name__ == "__main__":
