@@ -34,3 +34,4 @@ tick(); setInterval(tick, 30000);
 const APIs = {
   leader_board: "/api/leader-board"
 }
+

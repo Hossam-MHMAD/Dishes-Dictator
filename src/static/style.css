@@ -180,6 +180,10 @@ summary:focus-visible {
   font-size: .8rem
 }
 
+#board {
+  grid-column: span 6;
+}
+
 .medal {
   width: 88px;
   height: 88px;

@@ -57,13 +57,19 @@ def init_db():
   CREATE TABLE IF NOT EXISTS Reviews (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     review TEXT,
-    given_points INTEGER,
+    given_points REAL,
     evaluator_id INTEGER NOT NULL,
     cleaning_session_id INTEGER NOT NULL,
     FOREIGN KEY (evaluator_id) REFERENCES Users(id),
     FOREIGN KEY (cleaning_session_id) REFERENCES Cleaning_History(id)
   );
 
+  CREATE TABLE IF NOT EXISTS Weeks_History (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    week_number INTEGER,
+    week_dictator TEXT,
+    winning_points REAL
+  );
   """)
 
   conn.commit()
@@ -91,7 +97,24 @@ def get_leader_board():
   data = [dict(row) for row in rows]
   return jsonify(data)
 
+@app.route("/api/week_dictator", methods=["GET"])
+def get_last_week_dictator():
+  db = get_db()
+
+  curs = db.cursor()
+
+  row = curs.execute("""
+    SELECT week_dictator, winning_points FROM Weeks_History ORDER BY id DESC
+  """).fetchone()
+
+  if row is None:
+    return jsonify([])
+
+  data = [dict(row)]
+
+  return jsonify(data)
 
 if __name__ == "__main__":
   init_db()
   app.run()
+  
