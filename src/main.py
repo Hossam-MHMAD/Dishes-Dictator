@@ -110,7 +110,7 @@ def get_last_week_dictator():
   if row is None:
     return jsonify([])
 
-  data = [dict(row)]
+  data = dict(row)
 
   return jsonify(data)
 

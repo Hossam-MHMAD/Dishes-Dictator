@@ -32,6 +32,52 @@ tick(); setInterval(tick, 30000);
 
 // APIs 
 const APIs = {
-  leader_board: "/api/leader-board"
+  leader_board: "/api/leader-board",
+  current_dictator: "/api/week_dictator"
+}
+
+async function get_current_dictator() {
+  const response = await fetch(APIs.current_dictator)
+  const data = await response.json()
+
+  return data
+}
+
+async function get_leader_board() {
+  const response = await fetch(APIs.leader_board)
+  const data = await response.json()
+
+  console.log(data)
+  return data
+}
+
+async function init_landing_page() {
+  // Dictator Card
+  const dic_card_container = document.querySelector(".throne")
+  const dictator_name = dic_card_container.querySelector("h2")
+  const points = dic_card_container.querySelector(".pts")
+
+  const current_dictator_data = await get_current_dictator()
+
+  dictator_name.textContent = current_dictator_data.week_dictator
+  points.textContent = `with ${current_dictator_data.winning_points} winning points`
+
+  // Leader Board
+  const leader_board_container = document.querySelector("#board").querySelector("ol")
+
+  const leader_board_data = await get_leader_board()
+
+  leader_board_container.innerHTML = ""
+
+  leader_board_data.forEach(cleaner => {
+    const row = `
+      <li><span>${cleaner.name}</span><b>${cleaner.points} pts</b></li>
+    `
+    leader_board_container.innerHTML += row
+  })
+}
+
+if (document.querySelector(".landing_page")) {
+  init_landing_page()
 }
 
