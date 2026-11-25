@@ -92,7 +92,7 @@ def get_leader_board():
   FROM Cleaners AS c
   LEFT JOIN Users AS u
   ON c.user_id = u.id
-  ORDER BY points DESC
+  ORDER BY c.points DESC
   """).fetchall()
 
   data = [dict(row) for row in rows]
@@ -132,6 +132,15 @@ def add_user(f_name, l_name, role, email, password):
 
   return user_id
 
+def check_password(password):
+  db = get_db()
+
+  curs = db.cursor()
+
+  exist = curs.execute("SELECT password FROM Users WHERE password = ?", (password,)).fetchone()
+
+  return exist
+
 @app.route("/register", methods=["GET", "POST"])
 def register():
   if request.method == "POST":
@@ -145,11 +154,16 @@ def register():
     if password != conf_pass:
       return render_template("register.html", error="Passwords do not match")
 
+    if check_password(password):
+      return render_template("register.html", error="Please use another password")
+
     user_id = add_user(first_name, last_name, role, email, password)
     
     return redirect(url_for("landing")) # redirect to landing-page for now
 
   return render_template("register.html")
+
+
 
 if __name__ == "__main__":
   init_db()
