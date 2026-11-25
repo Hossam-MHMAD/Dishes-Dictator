@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="wrap">
+  <header class="nav">
+    <div class="bar glass">
+      <span class="logo grad">D.D</span>
+      <nav class="auth-links" aria-label="Main">
+        <a href="{{ url_for('landing') }}">Home</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="auth">
+    <div class="auth-card glass">
+      <h1 class="grad">Register</h1>
+      <p class="auth-sub">Join the regime and wash for the crown.</p>
+      {% if error %}
+      <p class="auth-sub" style="color: red;">{{ error }}</p>
+      {% endif %}
+
+      <form method="post" action="">
+        <div class="field-row">
+          <div class="field">
+            <label for="first_name">First name</label>
+            <input type="text" id="first_name" name="first_name" autocomplete="given-name" required>
+          </div>
+          <div class="field">
+            <label for="last_name">Last name</label>
+            <input type="text" id="last_name" name="last_name" autocomplete="family-name" required>
+          </div>
+        </div>
+        <div class="field">
+          <label for="email">Email</label>
+          <input type="email" id="email" name="email" placeholder="you@example.com" autocomplete="email" required>
+        </div>
+        <div class="field">
+          <label for="password">Password</label>
+          <input type="password" id="password" name="password" autocomplete="new-password" required>
+        </div>
+        <div class="field">
+          <label for="confirm_password">Confirm password</label>
+          <input type="password" id="confirm_password" name="confirm_password" autocomplete="new-password" required>
+        </div>
+        <fieldset class="role">
+          <legend>Register as</legend>
+          <div class="role-options">
+            <div class="role-opt">
+              <input type="radio" id="role_cleaner" name="role" value="cleaner" required>
+              <label for="role_cleaner"><b>Cleaner</b><span>Wash &amp; earn points</span></label>
+            </div>
+            <div class="role-opt">
+              <input type="radio" id="role_evaluator" name="role" value="evaluator">
+              <label for="role_evaluator"><b>Evaluator</b><span>Judge the washes</span></label>
+            </div>
+          </div>
+        </fieldset>
+        <button class="btn fill" type="submit">Register</button>
+      </form>
+
+      <p class="auth-alt">Already have an account? <a href="#login">Log in</a></p>
+    </div>
+  </main>
+</div>
+
+{% endblock %}

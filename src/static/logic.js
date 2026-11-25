@@ -36,6 +36,7 @@ const APIs = {
   current_dictator: "/api/week_dictator"
 }
 
+// landing page setup
 async function get_current_dictator() {
   const response = await fetch(APIs.current_dictator)
   const data = await response.json()
@@ -47,7 +48,6 @@ async function get_leader_board() {
   const response = await fetch(APIs.leader_board)
   const data = await response.json()
 
-  console.log(data)
   return data
 }
 
@@ -59,8 +59,8 @@ async function init_landing_page() {
 
   const current_dictator_data = await get_current_dictator()
 
-  dictator_name.textContent = current_dictator_data.week_dictator
-  points.textContent = `with ${current_dictator_data.winning_points} winning points`
+  dictator_name.textContent = current_dictator_data.week_dictator || "-------"
+  points.textContent = `with ${current_dictator_data.winning_points || "0"} winning points`
 
   // Leader Board
   const leader_board_container = document.querySelector("#board").querySelector("ol")

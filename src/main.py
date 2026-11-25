@@ -1,4 +1,4 @@
-from flask import Flask, request, render_template, g, jsonify
+from flask import Flask, request, render_template, g, jsonify, url_for, redirect
 import sqlite3
 
 DB = "data.db"
@@ -31,10 +31,11 @@ def init_db():
 
   CREATE TABLE IF NOT EXISTS Users (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
-    name TEXT,
+    first_name TEXT,
+    last_name TEXT,
     role TEXT,
     email TEXT, 
-    password_hash TEXT UNIQUE
+    password TEXT UNIQUE
   );
 
   CREATE TABLE IF NOT EXISTS Cleaners (
@@ -87,7 +88,7 @@ def get_leader_board():
   curs = db.cursor()
 
   rows = curs.execute("""
-  SELECT c.points, u.name
+  SELECT c.points, u.first_name
   FROM Cleaners AS c
   LEFT JOIN Users AS u
   ON c.user_id = u.id
@@ -113,6 +114,42 @@ def get_last_week_dictator():
   data = dict(row)
 
   return jsonify(data)
+
+# register section
+def add_user(f_name, l_name, role, email, password):
+  db = get_db()
+
+  curs = db.cursor()
+
+  curs.execute("INSERT INTO Users (first_name, last_name, role, email, password) VALUES (?, ?, ?, ?, ?)", (f_name, l_name, role, email, password))
+
+  user_id = curs.lastrowid
+
+  if role == "cleaner":
+    curs.execute("INSERT INTO Cleaners (points, user_id) VALUES (?, ?)", (0, user_id)) # 0 is points, curs.lastrowid is user_id
+
+  db.commit()
+
+  return user_id
+
+@app.route("/register", methods=["GET", "POST"])
+def register():
+  if request.method == "POST":
+    first_name = request.form.get("first_name")
+    last_name = request.form.get("last_name")
+    role = request.form.get("role")
+    email = request.form.get("email")
+    password = request.form.get("password")
+    conf_pass = request.form.get("confirm_password")
+
+    if password != conf_pass:
+      return render_template("register.html", error="Passwords do not match")
+
+    user_id = add_user(first_name, last_name, role, email, password)
+    
+    return redirect(url_for("landing")) # redirect to landing-page for now
+
+  return render_template("register.html")
 
 if __name__ == "__main__":
   init_db()
